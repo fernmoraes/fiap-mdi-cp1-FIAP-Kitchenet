@@ -9,7 +9,9 @@ export default function Layout() {
       tabBarActiveTintColor: '#F23064',
       tabBarStyle: { backgroundColor: '#262626' },
       headerStyle: { backgroundColor: '#262626' },
-      headerTintColor: '#F23064'
+      headerTintColor: '#F23064',
+      headerTitleAlign: 'center',
+      headerTitleStyle: { fontWeight: 'bold' }
     }}>
       <Tabs.Screen
         name="index"
