@@ -1,6 +1,8 @@
 import { Tabs } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 import Entypo from '@expo/vector-icons/Entypo';
+import { isAuthenticated } from './auth';
+
 export default function Layout() {
   return (
     <Tabs screenOptions={{
@@ -22,6 +24,14 @@ export default function Layout() {
           title: 'Perfil',
           tabBarIcon: ({ color }) => <Ionicons name="person" size={24} color={color} />,
         }}
+        listeners={({ navigation }) => ({
+          tabPress: (e) => {
+            if (!isAuthenticated()) {
+              e.preventDefault();
+              navigation.navigate('index');
+            }
+          },
+        })}
       />
     </Tabs>
   );

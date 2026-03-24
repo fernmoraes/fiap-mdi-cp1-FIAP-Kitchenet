@@ -1,46 +1,70 @@
 import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
 import { useRouter } from 'expo-router';
 import { useState } from 'react';
+import { login, logout, isAuthenticated } from './auth';
 
 export default function Home() {
   const router = useRouter();
   const [rm, setRm] = useState('');
   const [senha, setSenha] = useState('');
+  const [logado, setLogado] = useState(isAuthenticated());
 
   const entrar = () => {
-    // Aqui pode adicionar validação ou autenticação real
-    router.push('/perfil');
+    // autenticação de teste (não precisa ser real)
+    login();
+    setLogado(true);
+  };
+
+  const deslogar = () => {
+    logout();
+    setLogado(false);
+    setRm('');
+    setSenha('');
+    router.push('/');
   };
 
   return (
     <View style={styles.container}>
-      <View style={styles.loginCard}>
-        <Text style={styles.titulo}>LOGIN</Text>
+      {logado ? (
+        <View style={styles.loginCard}>
+          <Text style={styles.titulo}>Você está logado!</Text>
+          <Text style={[styles.descricao, { marginBottom: 20 }]}>Se quiser, acesse a aba Perfil ou clique em sair.</Text>
+          <TouchableOpacity style={styles.botao} onPress={() => router.push('/perfil')}>
+            <Text style={styles.botaoTexto}>Ir para Perfil</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={[styles.botao, { backgroundColor: '#8C8C8C', marginTop: 12 }]} onPress={deslogar}>
+            <Text style={styles.botaoTexto}>Sair</Text>
+          </TouchableOpacity>
+        </View>
+      ) : (
+        <View style={styles.loginCard}>
+          <Text style={styles.titulo}>LOGIN</Text>
 
-        <Text style={styles.label}>RM</Text>
-        <TextInput
-          style={styles.input}
-          placeholder="Insira seu RM"
-          placeholderTextColor="#8C8C8C"
-          value={rm}
-          onChangeText={setRm}
-          keyboardType="numeric"
-        />
+          <Text style={styles.label}>RM</Text>
+          <TextInput
+            style={styles.input}
+            placeholder="Insira seu RM"
+            placeholderTextColor="#8C8C8C"
+            value={rm}
+            onChangeText={setRm}
+            keyboardType="numeric"
+          />
 
-        <Text style={styles.label}>Senha</Text>
-        <TextInput
-          style={styles.input}
-          placeholder="Insira sua senha"
-          placeholderTextColor="#8C8C8C"
-          secureTextEntry
-          value={senha}
-          onChangeText={setSenha}
-        />
+          <Text style={styles.label}>Senha</Text>
+          <TextInput
+            style={styles.input}
+            placeholder="Insira sua senha"
+            placeholderTextColor="#8C8C8C"
+            secureTextEntry
+            value={senha}
+            onChangeText={setSenha}
+          />
 
-        <TouchableOpacity style={styles.botao} onPress={entrar}>
-          <Text style={styles.botaoTexto}>Entrar</Text>
-        </TouchableOpacity>
-      </View>
+          <TouchableOpacity style={styles.botao} onPress={entrar}>
+            <Text style={styles.botaoTexto}>Entrar</Text>
+          </TouchableOpacity>
+        </View>
+      )}
     </View>
   );
 }
