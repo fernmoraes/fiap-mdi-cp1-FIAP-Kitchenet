@@ -10,6 +10,10 @@ export default function Home() {
   const [logado, setLogado] = useState(isAuthenticated());
 
   const entrar = () => {
+    if (!rm.trim() || !senha.trim()) {
+      alert('Por favor, preencha RM e senha antes de entrar.');
+      return;
+    }
     // autenticação de teste (não precisa ser real)
     login();
     setLogado(true);
@@ -28,7 +32,6 @@ export default function Home() {
       {logado ? (
         <View style={styles.loginCard}>
           <Text style={styles.titulo}>Você está logado!</Text>
-          <Text style={[styles.descricao, { marginBottom: 20 }]}>Se quiser, acesse a aba Perfil ou clique em sair.</Text>
           <TouchableOpacity style={styles.botao} onPress={() => router.push('/perfil')}>
             <Text style={styles.botaoTexto}>Ir para Perfil</Text>
           </TouchableOpacity>
