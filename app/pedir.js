@@ -1,12 +1,11 @@
 import { useState } from 'react';
-import { View, Text, TouchableOpacity, FlatList, StyleSheet } from 'react-native';
+import { View, Text, TouchableOpacity, ScrollView, StyleSheet } from 'react-native';
 import { useRouter } from 'expo-router';
 
 export default function Pedir() {
   const router = useRouter();
   const [carrinho, setCarrinho] = useState([]);
 
-  // Itens disponíveis organizados por tipo
   const itensPorTipo = {
     Bebidas: [
       { id: '1', nome: 'Refrigerante', preco: 5.00 },
@@ -26,8 +25,27 @@ export default function Pedir() {
   };
 
   const adicionarAoCarrinho = (item) => {
-    setCarrinho([...carrinho, item]);
-    alert(`${item.nome} adicionado ao pedido!`);
+    const existente = carrinho.find(c => c.item.id === item.id);
+    if (existente) {
+      existente.quantidade += 1;
+      setCarrinho([...carrinho]);
+    } else {
+      setCarrinho([...carrinho, { item, quantidade: 1 }]);
+    }
+  };
+
+  const removerDoCarrinho = (index) => {
+    const novoCarrinho = [...carrinho];
+    if (novoCarrinho[index].quantidade > 1) {
+      novoCarrinho[index].quantidade -= 1;
+    } else {
+      novoCarrinho.splice(index, 1);
+    }
+    setCarrinho(novoCarrinho);
+  };
+
+  const calcularTotal = () => {
+    return carrinho.reduce((total, c) => total + (c.item.preco * c.quantidade), 0);
   };
 
   const renderTipo = (tipo, itens) => (
@@ -49,19 +67,41 @@ export default function Pedir() {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.titulo}>Fazer Pedido</Text>
+      <ScrollView contentContainerStyle={styles.scrollContainer}>
+        <Text style={styles.titulo}>Fazer Pedido</Text>
 
-      {Object.entries(itensPorTipo).map(([tipo, itens]) => renderTipo(tipo, itens))}
+        {Object.entries(itensPorTipo).map(([tipo, itens]) => renderTipo(tipo, itens))}
 
-      <TouchableOpacity style={styles.botaoVoltar} onPress={() => router.back()}>
-        <Text style={styles.botaoVoltarTexto}>Voltar</Text>
-      </TouchableOpacity>
+        <View style={styles.carrinhoContainer}>
+          <Text style={styles.carrinhoTitulo}>Carrinho</Text>
+          {carrinho.length === 0 ? (
+            <Text style={styles.carrinhoVazio}>Nenhum item no carrinho</Text>
+          ) : (
+            <>
+              {carrinho.map((c, index) => (
+                <View key={index} style={styles.carrinhoItem}>
+                  <Text style={styles.carrinhoItemNome}>{c.item.nome} (x{c.quantidade})</Text>
+                  <Text style={styles.carrinhoItemPreco}>R$ {(c.item.preco * c.quantidade).toFixed(2)}</Text>
+                  <TouchableOpacity style={styles.botaoRemover} onPress={() => removerDoCarrinho(index)}>
+                    <Text style={styles.botaoRemoverTexto}>Remover</Text>
+                  </TouchableOpacity>
+                </View>
+              ))}
+              <Text style={styles.total}>Total: R$ {calcularTotal().toFixed(2)}</Text>
+              <TouchableOpacity style={styles.botaoFinalizar}>
+                <Text style={styles.botaoFinalizarTexto}>Finalizar Pedido</Text>
+              </TouchableOpacity>
+            </>
+          )}
+        </View>
+      </ScrollView>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: '#262626', padding: 16 },
+  container: { flex: 1, backgroundColor: '#262626' },
+  scrollContainer: { padding: 16 },
   titulo: { fontSize: 28, fontWeight: 'bold', color: '#F23064', textAlign: 'center', marginBottom: 20 },
   tipoContainer: { marginBottom: 20 },
   tipoTitulo: { fontSize: 20, fontWeight: 'bold', color: '#8C8C8C', marginBottom: 10 },
@@ -71,6 +111,15 @@ const styles = StyleSheet.create({
   itemPreco: { color: '#8C8C8C', fontSize: 12, textAlign: 'center', marginVertical: 4 },
   botaoAdicionar: { backgroundColor: '#F23064', paddingVertical: 6, paddingHorizontal: 10, borderRadius: 6, marginTop: 4 },
   botaoAdicionarTexto: { color: '#fff', fontWeight: 'bold', fontSize: 12 },
-  botaoVoltar: { backgroundColor: '#8C8C8C', paddingVertical: 12, borderRadius: 8, alignItems: 'center', marginTop: 20 },
-  botaoVoltarTexto: { color: '#fff', fontWeight: 'bold' },
+  carrinhoContainer: { marginTop: 20 },
+  carrinhoTitulo: { fontSize: 20, fontWeight: 'bold', color: '#F23064', marginBottom: 10 },
+  carrinhoVazio: { color: '#8C8C8C', textAlign: 'center', marginBottom: 10 },
+  carrinhoItem: { backgroundColor: '#404040', padding: 10, borderRadius: 8, marginBottom: 8, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' },
+  carrinhoItemNome: { color: '#fff', fontSize: 14, flex: 1 },
+  carrinhoItemPreco: { color: '#8C8C8C', fontSize: 12 },
+  botaoRemover: { backgroundColor: '#8C8C8C', paddingVertical: 4, paddingHorizontal: 8, borderRadius: 4, marginLeft: 10 },
+  botaoRemoverTexto: { color: '#fff', fontSize: 12 },
+  total: { fontSize: 16, fontWeight: 'bold', color: '#F23064', textAlign: 'center', marginVertical: 10 },
+  botaoFinalizar: { backgroundColor: '#F23064', paddingVertical: 12, borderRadius: 8, alignItems: 'center', marginTop: 10 },
+  botaoFinalizarTexto: { color: '#fff', fontWeight: 'bold' },
 });
