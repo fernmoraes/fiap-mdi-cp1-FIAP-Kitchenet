@@ -35,6 +35,21 @@ export default function Layout() {
           },
         })}
       />
+      <Tabs.Screen
+        name="pedir"
+        options={{
+          title: 'Pedir',
+          tabBarIcon: ({ color }) => <Ionicons name="restaurant-outline" size={24} color={color} />,
+        }}
+        listeners={({ navigation }) => ({
+          tabPress: (e) => {
+            if (!isAuthenticated()) {
+              e.preventDefault();
+              navigation.navigate('index');
+            }
+          },
+        })}
+      />
     </Tabs>
   );
 }

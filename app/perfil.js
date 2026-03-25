@@ -17,11 +17,10 @@ export default function Sobre() {
     router.push('/');
   };
 
-  // Dados mock de pedidos
   const pedidos = [
-    { id: '1', nome: 'Hambúrguer', status: 'Entregue' },
-    { id: '2', nome: 'Pizza', status: 'Em andamento' },
-    { id: '3', nome: 'Salada', status: 'Cancelado' },
+    { id: '1', nome: 'Hambúrguer', status: 'Pronto' },
+    { id: '2', nome: 'Pizza', status: 'Concluído' },
+    { id: '3', nome: 'Salada', status: 'Reembolsado' },
   ];
 
   const renderPedido = ({ item }) => (
@@ -45,6 +44,12 @@ export default function Sobre() {
         />
       </View>
 
+      <TouchableOpacity style={styles.botaoPedir} onPress={() => router.push('/pedir')}>
+        <Text style={styles.botaoPedirTexto}>Pedir</Text>
+      </TouchableOpacity>
+
+      <View style={{flex: 1}} />
+
       <TouchableOpacity style={styles.botaoDeslogar} onPress={deslogar}>
         <Text style={styles.botaoDeslogarTexto}>Sair</Text>
       </TouchableOpacity>
@@ -60,6 +65,8 @@ const styles = StyleSheet.create({
   pedidoItem: { backgroundColor: '#404040', padding: 12, borderRadius: 8, marginBottom: 8, flexDirection: 'row', justifyContent: 'space-between' },
   pedidoNome: { color: '#fff', fontSize: 16 },
   pedidoStatus: { color: '#8C8C8C', fontSize: 14 },
-  botaoDeslogar: { backgroundColor: '#8C8C8C', paddingVertical: 10, paddingHorizontal: 16, borderRadius: 8 },
+  botaoDeslogar: { backgroundColor: '#8C8C8C', paddingVertical: 12, borderRadius: 8, alignItems: 'center', width: '100%', marginTop: 12 },
   botaoDeslogarTexto: { color: '#fff', fontWeight: 'bold' },
+  botaoPedir: { backgroundColor: '#F23064', paddingVertical: 15, paddingHorizontal: 20, borderRadius: 8, marginTop: 12 },
+  botaoPedirTexto: { color: '#fff', fontWeight: 'bold', fontSize: 18 },
 });
