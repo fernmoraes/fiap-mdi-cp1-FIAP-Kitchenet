@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { View, Text, TouchableOpacity, ScrollView, Modal, StyleSheet } from 'react-native';
 import { useRouter } from 'expo-router';
+import { adicionarPedido } from './pedidos';
 
 export default function Pedir() {
   const router = useRouter();
@@ -56,6 +57,7 @@ export default function Pedir() {
   };
 
   const confirmarPagamento = (metodo) => {
+    adicionarPedido(carrinho);
     setPagamentoConfirmado(true);
   };
 
