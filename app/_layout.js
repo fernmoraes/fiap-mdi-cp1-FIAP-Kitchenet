@@ -50,6 +50,21 @@ export default function Layout() {
           },
         })}
       />
+      <Tabs.Screen
+        name="retirada"
+        options={{
+          title: 'Retirada',
+          tabBarIcon: ({ color }) => <Ionicons name="bag-check-outline" size={24} color={color} />,
+        }}
+        listeners={({ navigation }) => ({
+          tabPress: (e) => {
+            if (!isAuthenticated()) {
+              e.preventDefault();
+              navigation.navigate('index');
+            }
+          },
+        })}
+      />
     </Tabs>
   );
 }
