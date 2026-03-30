@@ -121,7 +121,7 @@ O login é simulado — qualquer RM e senha preenchidos permitem o acesso.
 
 | Integrante | Branch | Contribuição |
 |---|---|---|
-| Fernando Moraes | `master` | Estrutura base, Login, Cardápio e Carrinho |
+| Fernando Moraes | `Fernando` | Estrutura base, Login, Cardápio e Carrinho |
 | Weslley | `Weslley` | Seção "Finalizar Pedido" com modal de pagamento |
 | Guilherme | `Guilherme` | Integração dos pedidos com a seção "Perfil" |
 | Bruna | `Bruna` | Seção "Retirada" com código do pedido |
