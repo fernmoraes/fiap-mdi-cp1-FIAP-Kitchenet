@@ -46,7 +46,6 @@ Login → Cardápio → Carrinho → Finalizar Pedido → Perfil → Retirada
 ## Screenshots
 
 <p align="center">
-  <img src="assets/img-readme/prt01.png" width="200" alt="Screenshot 1">
   <img src="assets/img-readme/prt02.png" width="200" alt="Screenshot 2">
   <img src="assets/img-readme/prt03.png" width="200" alt="Screenshot 3">
   <img src="assets/img-readme/prt04.png" width="200" alt="Screenshot 4">
