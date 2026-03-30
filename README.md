@@ -12,6 +12,8 @@ Aplicativo mobile de pedidos para a cantina da FIAP, desenvolvido como projeto a
 ## Sobre o Projeto
 
 O **FIAP Kitchenet** permite que alunos realizem pedidos de lanches, bebidas e doces diretamente pelo celular, acompanhem seus pedidos no perfil e retirem no balcão usando um código gerado automaticamente.
+Link do vídeo mostrando o funcionamento:
+https://youtube.com/shorts/7Cu7EE4myg8?feature=share
 
 ---
 
@@ -135,7 +137,7 @@ O login é simulado — qualquer RM e senha preenchidos permitem o acesso.
 
 | Integrante | Branch | Contribuição |
 |---|---|---|
-| Fernando Moraes | `master` | Estrutura base, Login, Cardápio e Carrinho |
+| Fernando Moraes | `Fernando` | Estrutura base, Login, Cardápio e Carrinho |
 | Weslley | `Weslley` | Seção "Finalizar Pedido" com modal de pagamento |
 | Guilherme | `Guilherme` | Integração dos pedidos com a seção "Perfil" |
 | Bruna | `Bruna` | Seção "Retirada" com código do pedido |
